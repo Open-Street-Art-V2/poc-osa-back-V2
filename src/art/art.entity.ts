@@ -1,25 +1,32 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique } from "typeorm"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 
 @Entity()
-@Unique(["title"])
+@Unique(['title'])
 export class Art {
-    @PrimaryGeneratedColumn()
-    public id?: Number;
+  @PrimaryGeneratedColumn()
+  public id?: number;
 
-    @Column()
-    public title: String;
+  @Column()
+  public title: string;
 
-    @Column()
-    public artist: String;
-    
-    @Column("decimal", { precision: 10, scale: 5})
-    public latitude: Number;
+  @Column()
+  public artist: string;
 
-    @Column("decimal", { precision: 10, scale: 5})
-    public longitude: Number;
+  @Column('decimal', { precision: 10, scale: 5 })
+  public latitude: number;
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-    public created_at?: Date;
+  @Column('decimal', { precision: 10, scale: 5 })
+  public longitude: number;
 
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public created_at?: Date;
 }
-

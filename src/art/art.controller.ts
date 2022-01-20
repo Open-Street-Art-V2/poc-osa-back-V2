@@ -6,13 +6,13 @@ import {
   Patch,
   Param,
   Delete,
-  // UseGuards,
+  UseGuards,
   Query,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-// import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { Art } from './art.entity';
 import { ArtService } from './art.service';
@@ -26,7 +26,7 @@ export class ArtController {
   constructor(private readonly artService: ArtService) {}
 
   @HttpCode(HttpStatus.CREATED)
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createArtDto: CreateArtDto) {
     const art: Art = await this.artService.createArt(createArtDto);
@@ -63,7 +63,7 @@ export class ArtController {
     };
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch(':artId')
   public async update(
     @Param('artId') artId: number,
@@ -76,7 +76,7 @@ export class ArtController {
     };
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete('/:artId')
   public async remove(@Param('artId') artId: number) {
     const art: DeleteResult = await this.artService.deleteArt(artId);

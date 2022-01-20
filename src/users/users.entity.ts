@@ -1,4 +1,4 @@
-// import { Role } from 'src/auth/roles/role.enum';
+import { Role } from 'src/auth/roles/role.enum';
 import {
   BaseEntity,
   Column,
@@ -20,8 +20,8 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  // @Column("enum", { enum: Role })
-  // role: Role;
+  @Column('enum', { enum: Role })
+  role: Role;
 
   @CreateDateColumn({
     type: 'timestamp',
