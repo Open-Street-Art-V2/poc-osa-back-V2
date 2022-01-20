@@ -32,8 +32,8 @@ export class ArtController {
     const art: Art = await this.artService.createArt(createArtDto);
     return {
       statusCode: 201,
-      art: art 
-    }
+      art: art,
+    };
   }
 
   @Get()
@@ -43,15 +43,15 @@ export class ArtController {
       const art: Art[] = await this.artService.getArts();
       return {
         statusCode: 200,
-        art: art
-      }
+        art: art,
+      };
     }
     //FIXME: Ce truc ne sert à rien, il est étouffé par @Get(":artId") un peu plus en bas
     const art: Art = await this.artService.getArtByTitle(queryParams.title);
-      return {
-        statusCode: 200,
-        art: art
-      }
+    return {
+      statusCode: 200,
+      art: art,
+    };
   }
 
   @Get(':artId')
@@ -59,18 +59,21 @@ export class ArtController {
     const art: Art = await this.artService.getArt(artId);
     return {
       statusCode: 200,
-      art: art
-    }
+      art: art,
+    };
   }
 
   // @UseGuards(JwtAuthGuard)
   @Patch(':artId')
-  public async update(@Param('artId') artId: number, @Body() updateArtDto: UpdateArtDto) {
+  public async update(
+    @Param('artId') artId: number,
+    @Body() updateArtDto: UpdateArtDto,
+  ) {
     const art: Art = await this.artService.editArt(artId, updateArtDto);
     return {
       statusCode: 200,
-      art: art
-    }
+      art: art,
+    };
   }
 
   // @UseGuards(JwtAuthGuard)
@@ -82,7 +85,7 @@ export class ArtController {
       deleted: {
         id: artId,
         affected: art.affected,
-      }
-    }
+      },
+    };
   }
 }
