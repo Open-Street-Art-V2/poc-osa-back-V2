@@ -12,9 +12,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiQuery, ApiTags, PartialType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { type } from 'os';
-import { title } from 'process';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/decorator/roles.decorator';
 import { RoleGuard } from 'src/auth/roles/guards/role.guard';
@@ -32,7 +29,8 @@ export class ArtController {
   constructor(private readonly artService: ArtService) {}
 
   @HttpCode(HttpStatus.CREATED)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @Post()
   async create(@Body() createArtDto: CreateArtDto) {
     const art: Art = await this.artService.createArt(createArtDto);
@@ -71,7 +69,8 @@ export class ArtController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @Patch(':artId')
   @ApiParam({description: "Art ID", name: "artId", type: 'number'})
   @ApiBody({description: "Fields to edit", type: CreateArtDto, required: true})

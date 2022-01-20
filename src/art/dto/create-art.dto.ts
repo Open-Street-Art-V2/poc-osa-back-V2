@@ -25,10 +25,12 @@ export class CreateArtDto {
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsNumber()
   latitude: number;
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsNumber()
   longitude: number;
 
   /*@ApiProperty()  // TODO: On doit discuter la dessus
