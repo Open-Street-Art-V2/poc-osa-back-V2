@@ -13,6 +13,9 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Roles } from 'src/auth/roles/decorator/roles.decorator';
+import { RoleGuard } from 'src/auth/roles/guards/role.guard';
+import { Role } from 'src/auth/roles/role.enum';
 import { DeleteResult } from 'typeorm';
 import { Art } from './art.entity';
 import { ArtService } from './art.service';
@@ -76,7 +79,8 @@ export class ArtController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
   @Delete('/:artId')
   public async remove(@Param('artId') artId: number) {
     const art: DeleteResult = await this.artService.deleteArt(artId);

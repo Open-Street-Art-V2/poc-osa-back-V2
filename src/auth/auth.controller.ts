@@ -34,7 +34,7 @@ export class AuthController {
   @Post('login')
   async login(@Req() request, @Res({ passthrough: true }) res: Response) {
     const jwt = await this.authService.login(request.user);
-    res.setHeader('Authorization', jwt.access_token);
+    res.setHeader('Authorization', jwt.access_token + "; HttpOnly; Secure;");
     return {
       statusCode: '200',
       user: request.user,
