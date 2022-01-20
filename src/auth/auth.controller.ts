@@ -9,7 +9,7 @@ import {
   Get,
   Patch,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CreateUserDTO } from 'src/users/dto/create-user-dto';
 import { PasswordDTO } from 'src/users/dto/update-password.dto';
@@ -32,10 +32,10 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  @ApiBody({type: CreateUserDTO})
+  @ApiBody({ type: CreateUserDTO })
   async login(@Req() request, @Res({ passthrough: true }) res: Response) {
     const jwt = await this.authService.login(request.user);
-    res.setHeader('Authorization', jwt.access_token + "; HttpOnly; Secure;");
+    res.setHeader('Authorization', jwt.access_token + '; HttpOnly; Secure;');
     return {
       statusCode: '200',
       user: request.user,
@@ -48,7 +48,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBody({type: PasswordDTO})
+  @ApiBody({ type: PasswordDTO })
   @Patch('edit')
   async editProfile(@Body() password: PasswordDTO, @Req() req) {
     return await this.usersService.editPassword(password, req.user.id);

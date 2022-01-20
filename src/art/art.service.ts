@@ -1,7 +1,6 @@
 import { UpdateArtDto } from './dto/update-art.dto';
 import { ArtRepository } from './art.repository';
 import {
-  HttpCode,
   HttpException,
   HttpStatus,
   Injectable,
@@ -53,6 +52,19 @@ export class ArtService {
     const findArt = await this.artRepository.findOne({
       where: {
         title: title,
+      },
+    });
+
+    if (!findArt) {
+      throw new NotFoundException('Art not found');
+    }
+    return findArt;
+  }
+
+  public async getArtByArtist(artist: string): Promise<[Art[], number]> {
+    const findArt = await this.artRepository.findAndCount({
+      where: {
+        artist: artist,
       },
     });
 

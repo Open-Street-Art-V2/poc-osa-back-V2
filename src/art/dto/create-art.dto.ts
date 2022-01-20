@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-class Geo {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  latitude: number;
+// class Geo {
+//   @ApiProperty()
+//   @IsNotEmpty()
+//   @IsNumber()
+//   latitude: number;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  longitude: number;
-}
+//   @ApiProperty()
+//   @IsNotEmpty()
+//   longitude: number;
+// }
 
 export class CreateArtDto {
   @ApiProperty()

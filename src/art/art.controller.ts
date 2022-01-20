@@ -11,7 +11,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiBody, ApiParam, ApiQuery, ApiTags, PartialType } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/decorator/roles.decorator';
 import { RoleGuard } from 'src/auth/roles/guards/role.guard';
@@ -41,7 +41,12 @@ export class ArtController {
   }
 
   @Get()
-  @ApiQuery({description: "Art title", name: 'title', type: 'string', required: false})
+  @ApiQuery({
+    description: 'Art title',
+    name: 'title',
+    type: 'string',
+    required: false,
+  })
   public async getArts(@Query() queryParams: GetArtsQuery) {
     if (Object.keys(queryParams).length === 0) {
       // if no params in the query
@@ -52,15 +57,24 @@ export class ArtController {
       };
     }
 
-    const art: Art = await this.artService.getArtByTitle(queryParams.title);
-    return {
-      statusCode: 200,
-      art: art,
-    };
+    if (queryParams.title) {
+      const art: Art = await this.artService.getArtByTitle(queryParams.title);
+      return {
+        statusCode: 200,
+        art: art,
+      };
+    } else if (queryParams.artist) {
+      const art = await this.artService.getArtByArtist(queryParams.artist);
+      return {
+        statusCode: 200,
+        count: art[1],
+        art: art[0],
+      };
+    }
   }
 
   @Get(':artId')
-  @ApiParam({description: "Art ID", name: "artId", type: 'number'})
+  @ApiParam({ description: 'Art ID', name: 'artId', type: 'number' })
   public async getArt(@Param('artId') artId: number) {
     const art: Art = await this.artService.getArt(artId);
     return {
@@ -72,8 +86,12 @@ export class ArtController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.ADMIN, Role.USER)
   @Patch(':artId')
-  @ApiParam({description: "Art ID", name: "artId", type: 'number'})
-  @ApiBody({description: "Fields to edit", type: CreateArtDto, required: true})
+  @ApiParam({ description: 'Art ID', name: 'artId', type: 'number' })
+  @ApiBody({
+    description: 'Fields to edit',
+    type: CreateArtDto,
+    required: true,
+  })
   public async update(
     @Param('artId') artId: number,
     @Body() updateArtDto: UpdateArtDto,
