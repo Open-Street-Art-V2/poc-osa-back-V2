@@ -8,37 +8,36 @@ describe('ArtService', () => {
   let service;
   let repository;
 
-  const mockArtRepository = ()=>({
-    createArt:jest.fn(),
+  const mockArtRepository = () => ({
+    createArt: jest.fn(),
     find: jest.fn(),
     findOne: jest.fn(),
-    delete:jest.fn(),
+    delete: jest.fn(),
   });
-
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ArtService,
         {
-          provide:ArtRepository,
-          useFactory:mockArtRepository
+          provide: ArtRepository,
+          useFactory: mockArtRepository,
         },
       ],
     }).compile();
     service = await module.get<ArtService>(ArtService);
-    repository=await module.get<ArtRepository>(ArtRepository);
+    repository = await module.get<ArtRepository>(ArtRepository);
   });
 
-  describe('CreateArt',()=>{
-    it('Should save a art in the data base', async ()=>{
+  describe('CreateArt', () => {
+    it('Should save a art in the data base', async () => {
       repository.createArt.mockResolvedValue('SomeArt');
       expect(repository.createArt).not.toHaveBeenCalled();
-      const createArtDto : CreateArtDto={
+      const createArtDto: CreateArtDto = {
         title: 'One Art',
-        artist:'Ahmadou Kassoum',
-        longitude:223,
-        latitude:222,
+        artist: 'Ahmadou Kassoum',
+        longitude: 223,
+        latitude: 222,
       };
       const result = await service.createArt(createArtDto);
       expect(repository.createArt).toHaveBeenLastCalledWith(createArtDto);
@@ -46,8 +45,8 @@ describe('ArtService', () => {
     });
   });
 
-  describe('getArts',()=>{
-    it('Should get all arts', async ()=>{
+  describe('getArts', () => {
+    it('Should get all arts', async () => {
       repository.find.mockResolvedValue('SomeArt');
       expect(repository.find).not.toHaveBeenCalled();
       const result = await service.getArts();
@@ -60,9 +59,9 @@ describe('ArtService', () => {
     it('should retrieve a art with an ID', async () => {
       const mockArt = {
         title: 'Another Art',
-        artist:'Ahmadou Kassoum Bachir',
-        longitude:1415,
-        latitude:1315,
+        artist: 'Ahmadou Kassoum Bachir',
+        longitude: 1415,
+        latitude: 1315,
       };
       repository.findOne.mockResolvedValue(mockArt);
       const result = await service.getArt(1);

@@ -5,19 +5,19 @@ import { Role } from '../role.enum';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
-  constructor(private reflector: Reflector){}
+  constructor(private reflector: Reflector) {}
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>("ROLES_ENTRY", [
-      context.getHandler(),
-      context.getClass()
-    ]);
-    if(!requiredRoles){
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
+      'ROLES_ENTRY',
+      [context.getHandler(), context.getClass()],
+    );
+    if (!requiredRoles) {
       return true;
     }
-    
+
     const { user } = context.switchToHttp().getRequest();
     return requiredRoles.some((role) => user.role == role);
   }

@@ -46,7 +46,7 @@ export class ArtController {
         art: art,
       };
     }
-    //FIXME: Ce truc ne sert à rien, il est étouffé par @Get(":artId") un peu plus en bas
+
     const art: Art = await this.artService.getArtByTitle(queryParams.title);
     return {
       statusCode: 200,

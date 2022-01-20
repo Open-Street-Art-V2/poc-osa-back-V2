@@ -7,6 +7,6 @@ import { ArtRepository } from './art.repository';
 @Module({
   imports: [TypeOrmModule.forFeature([ArtRepository])],
   providers: [ArtService],
-  controllers: [ArtController]
+  controllers: [ArtController],
 })
 export class ArtModule {}

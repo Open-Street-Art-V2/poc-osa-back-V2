@@ -15,8 +15,7 @@ export class AuthService {
     const user = await this.usersService.getUserByLogin(email);
     const isPasswordMatching = await bcrypt.compare(pwd, user.password);
     if (isPasswordMatching) {
-      const {password, ...validatedUser} = user;
-      // user.password = '';
+      const { password, ...validatedUser } = user;
       return validatedUser;
     }
     throw new HttpException(

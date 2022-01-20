@@ -31,7 +31,7 @@ export class CreateArtDto {
   @IsNotEmpty()
   longitude: number;
 
-  /*@ApiProperty()  // On doit discuter la dessus
+  /*@ApiProperty()  // TODO: On doit discuter la dessus
     @IsNotEmpty()
     geolocation: Geo;*/
 }
