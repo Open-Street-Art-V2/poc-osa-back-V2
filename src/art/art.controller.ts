@@ -51,18 +51,12 @@ export class ArtController {
     if (Object.keys(queryParams).length === 0) {
       // if no params in the query
       const art: Art[] = await this.artService.getArts();
-      return {
-        statusCode: 200,
-        art: art,
-      };
+      return art;
     }
 
     if (queryParams.title) {
       const art: Art = await this.artService.getArtByTitle(queryParams.title);
-      return {
-        statusCode: 200,
-        art: art,
-      };
+      return art;
     } else if (queryParams.artist) {
       const art = await this.artService.getArtByArtist(queryParams.artist);
       return {
